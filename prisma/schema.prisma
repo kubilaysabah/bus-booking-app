@@ -31,22 +31,41 @@ model Address {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  firstName     String
-  lastName      String
-  phone         String    @unique
-  email         String    @unique
-  password      String
-  birthDate     DateTime
-  gender        String
-  emailVerified DateTime?
-  image         String?
-  addresses     Address[]
+  id                      String      @id @default(cuid())
+  turkish_identity_number String
+  firstName               String
+  lastName                String
+  phone                   String      @unique
+  email                   String      @unique
+  password                String
+  birthDate               DateTime
+  gender                  String
+  emailVerified           DateTime?
+  image                   String?
+  addresses               Address[]
+  passengers              Passenger[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([phone, turkish_identity_number])
   @@map("users")
+}
+
+model Passenger {
+  id                      String   @id @default(cuid())
+  turkish_identity_number String
+  firstName               String
+  lastName                String
+  birthDate               DateTime
+  gender                  String
+  user                    User?    @relation(fields: [userId], references: [id])
+  userId                  String?
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  @@unique([userId, turkish_identity_number])
+  @@map("passengers")
 }
 
 model Bus {
