@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -25,12 +26,12 @@ export function LoginForm({
         <div className="grid gap-3">
           <div className="flex items-center">
             <Label htmlFor="password">Password</Label>
-            <a
-              href="#"
+            <Link
+              href="/forgot-password"
               className="ml-auto text-sm underline-offset-4 hover:underline"
             >
-              Forgot your password?
-            </a>
+              {'Forgot your password?'}
+            </Link>
           </div>
           <Input id="password" type="password" required />
         </div>
@@ -53,10 +54,10 @@ export function LoginForm({
         </Button>
       </div>
       <div className="text-center text-sm">
-        Don&apos;t have an account?{" "}
-        <a href="#" className="underline underline-offset-4">
-          Sign up
-        </a>
+        {'Don\'t have an account?'}
+        <Link href="/register" className="underline underline-offset-4 ml-1">
+          {'Register'}
+        </Link>
       </div>
     </form>
   )
