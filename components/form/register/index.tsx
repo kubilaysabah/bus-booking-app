@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { FormError } from '@/components/ui/form-error'
 
 type RegisterFormProps = React.ComponentProps<"form">
 
@@ -28,79 +29,63 @@ export function RegisterForm({
       <div className="grid gap-6">
         <div className="grid gap-3">
           <Label htmlFor="firstname">Firstname</Label>
-          <Input disabled={pending} id="firstname" type="text" placeholder="John" required />
-          {state?.firstName?.errors && state.firstName.errors.length > 0 && (
-            <ul className="space-y-2">
-              {state?.firstName?.errors?.map((error, index) => (
-                <li key={index}>
-                  <small className="text-xs text-red-600">
-                    {error}
-                  </small>
-                </li>
-              ))}
-            </ul>
-          )}
+          <Input 
+            disabled={pending} 
+            id="firstname" 
+            type="text" 
+            placeholder="John" 
+            required 
+            isError={Boolean(state?.firstName?.errors?.length)}
+          />
+          <FormError errors={state?.firstName?.errors} />
         </div>
         <div className="grid gap-3">
           <Label htmlFor="lastname">Lastname</Label>
-          <Input disabled={pending} id="lastname" type="text" placeholder="Doe" required />
-          {state?.lastName?.errors && state.lastName.errors.length > 0 && (
-            <ul className="space-y-2">
-              {state?.lastName?.errors?.map((error, index) => (
-                <li key={index}>
-                  <small className="text-xs text-red-600">
-                    {error}
-                  </small>
-                </li>
-              ))}
-            </ul>
-          )}
+          <Input 
+            disabled={pending} 
+            id="lastname" 
+            type="text" 
+            placeholder="Doe" 
+            required 
+            isError={Boolean(state?.lastName?.errors?.length)}
+          />
+          <FormError errors={state?.lastName?.errors} />
         </div>
         <div className="grid gap-3">
           <Label htmlFor="phone">Phone</Label>
-          <Input disabled={pending} id="phone" type="tel" placeholder="+905554443322" required />
-          {state?.phone?.errors && state.phone.errors.length > 0 && (
-            <ul className="space-y-2">
-              {state?.phone?.errors?.map((error, index) => (
-                <li key={index}>
-                  <small className="text-xs text-red-600">
-                    {error}
-                  </small>
-                </li>
-              ))}
-            </ul>
-          )}
+          <Input 
+            disabled={pending} 
+            id="phone" 
+            type="tel" 
+            placeholder="+905554443322" 
+            required 
+            isError={Boolean(state?.phone?.errors?.length)}
+          />
+          <FormError errors={state?.phone?.errors} />
         </div>
         <div className="grid gap-3">
           <Label htmlFor="email">Email</Label>
-          <Input disabled={pending} id="email" type="email" placeholder="johndoe@mail.com" required />
-          {state?.email?.errors && state.email.errors.length > 0 && (
-            <ul className="space-y-2">
-              {state?.email?.errors?.map((error, index) => (
-                <li key={index}>
-                  <small className="text-xs text-red-600">
-                    {error}
-                  </small>
-                </li>
-              ))}
-            </ul>
-          )}
+          <Input 
+            disabled={pending} 
+            id="email" 
+            type="email" 
+            placeholder="johndoe@mail.com" 
+            required 
+            isError={Boolean(state?.email?.errors?.length)}
+          />
+          <FormError errors={state?.email?.errors} />
         </div>
         <div className="grid gap-3">
           <Label htmlFor="password">Password</Label>
-          <Input disabled={pending} id="password" type="password" required />
+          <Input 
+            disabled={pending} 
+            id="password" 
+            type="password" 
+            required 
+            isError={Boolean(state?.password?.errors?.length)}
+          />
           <small className="text-muted-foreground">At least 8 characters long</small>
-          {state?.password?.errors && state.password.errors.length > 0 && (
-            <ul className="space-y-2">
-              {state?.password?.errors?.map((error, index) => (
-                <li key={index}>
-                  <small className="text-xs text-red-600">
-                    {error}
-                  </small>
-                </li>
-              ))}
-            </ul>
-          )}
+          <FormError errors={state?.password?.errors} />
         </div>
         <Button disabled={pending} type="submit" className="w-full">
           {"Register"}
