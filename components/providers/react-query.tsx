@@ -7,7 +7,11 @@ import { Button } from '@/components/ui/button';
 
 const queryClient = new QueryClient()
 
-export default function Panel() {
+type PanelProps = {
+    children?: React.ReactNode;
+}
+
+export default function ReactQueryProvider({ children }: PanelProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false)
 
     const togglePanel = useCallback(() => {
@@ -16,7 +20,7 @@ export default function Panel() {
 
     return (
         <QueryClientProvider client={queryClient}>
-            {/* The rest of your application */}
+            {children}
             <Button
                 className="fixed bottom-4 right-4 z-50"
                 variant={"default"}
