@@ -29,23 +29,78 @@ export function RegisterForm({
         <div className="grid gap-3">
           <Label htmlFor="firstname">Firstname</Label>
           <Input disabled={pending} id="firstname" type="text" placeholder="John" required />
+          {state?.firstName?.errors && state.firstName.errors.length > 0 && (
+            <ul className="space-y-2">
+              {state?.firstName?.errors?.map((error, index) => (
+                <li key={index}>
+                  <small className="text-xs text-red-600">
+                    {error}
+                  </small>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
         <div className="grid gap-3">
           <Label htmlFor="lastname">Lastname</Label>
           <Input disabled={pending} id="lastname" type="text" placeholder="Doe" required />
+          {state?.lastName?.errors && state.lastName.errors.length > 0 && (
+            <ul className="space-y-2">
+              {state?.lastName?.errors?.map((error, index) => (
+                <li key={index}>
+                  <small className="text-xs text-red-600">
+                    {error}
+                  </small>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
         <div className="grid gap-3">
           <Label htmlFor="phone">Phone</Label>
           <Input disabled={pending} id="phone" type="tel" placeholder="+905554443322" required />
+          {state?.phone?.errors && state.phone.errors.length > 0 && (
+            <ul className="space-y-2">
+              {state?.phone?.errors?.map((error, index) => (
+                <li key={index}>
+                  <small className="text-xs text-red-600">
+                    {error}
+                  </small>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
         <div className="grid gap-3">
           <Label htmlFor="email">Email</Label>
           <Input disabled={pending} id="email" type="email" placeholder="johndoe@mail.com" required />
+          {state?.email?.errors && state.email.errors.length > 0 && (
+            <ul className="space-y-2">
+              {state?.email?.errors?.map((error, index) => (
+                <li key={index}>
+                  <small className="text-xs text-red-600">
+                    {error}
+                  </small>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
         <div className="grid gap-3">
           <Label htmlFor="password">Password</Label>
           <Input disabled={pending} id="password" type="password" required />
           <small className="text-muted-foreground">At least 8 characters long</small>
+          {state?.password?.errors && state.password.errors.length > 0 && (
+            <ul className="space-y-2">
+              {state?.password?.errors?.map((error, index) => (
+                <li key={index}>
+                  <small className="text-xs text-red-600">
+                    {error}
+                  </small>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
         <Button disabled={pending} type="submit" className="w-full">
           {"Register"}
