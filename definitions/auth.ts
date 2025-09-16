@@ -25,4 +25,5 @@ export const RegisterFormSchema = z.object({
     .trim(),
 });
 
-export type FormState = any;
+export type RegisterFormType = z.infer<typeof RegisterFormSchema>;
+

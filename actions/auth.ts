@@ -1,18 +1,16 @@
-import { RegisterFormSchema, FormState } from "@/definitions/auth";
-import { ZodError } from 'zod'
+import { z } from 'zod'
+import { RegisterFormSchema, RegisterFormType } from "@/definitions/auth";
 
-export async function register(state: FormState, formData: FormData) {
+type State = FormState<RegisterFormType>;
+
+export function register(initialState: State, formData: FormData): State {
   const data = Object.fromEntries(formData.entries());
 
   // Validate form fields
-  const validatedFields = RegisterFormSchema.safeParse(data);
+  const result = RegisterFormSchema.safeParse(data);
 
   // If any form fields are invalid, return early
-  if (!validatedFields.success) {
-    return validatedFields.error!.issues
+  if (!result.success) {
+    return z.treeifyError(result.error).properties;
   }
-
-  // Call the provider or db to create a user...
-
-  return data;
 }

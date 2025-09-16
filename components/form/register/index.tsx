@@ -15,7 +15,7 @@ export function RegisterForm({
   ...props
 }: RegisterFormProps) {
   const [state, action, pending] = useActionState(register, null);
-  console.log("state", state);
+  console.log(state);
 
   return (
     <form action={action} className={cn("flex flex-col gap-6", className)} {...props}>
