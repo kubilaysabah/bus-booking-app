@@ -1,4 +1,4 @@
-import { compare } from 'bcrypt'
+import { compare } from 'bcryptjs'
 
 export async function decrypt(cookie: string | undefined): Promise<{ userId: string } | null> {
   if (!cookie) {
