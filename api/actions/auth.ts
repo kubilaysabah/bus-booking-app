@@ -22,11 +22,11 @@ export async function registerAction(
     firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
     gender: formData.get("gender"),
-    birthDate: formData.get("birthdate"),
+    birthDate: formData.get("birthDate"),
     email: formData.get("email"),
     phone: formData.get("phone"),
     password: formData.get("password"),
-  };
+  } as const;
 
   // Validate form fields
   const result = RegisterFormSchema.safeParse(data);
