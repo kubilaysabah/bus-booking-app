@@ -1,6 +1,5 @@
 "use server";
 
-import { redirect, RedirectType } from "next/navigation";
 import type { AxiosError } from "axios";
 import { z } from "zod";
 import {
@@ -10,7 +9,7 @@ import {
   type RegisterFormType,
 } from "@/api/definitions/auth";
 import { Register, Login } from "@/api/services/auth";
-import { deleteSession, createSession } from "@/lib/session";
+import { createSession } from "@/lib/session";
 
 type RegisterState = FormState<RegisterFormType>;
 type LoginState = FormState<LoginFormType>;
@@ -42,11 +41,10 @@ export async function registerAction(
       await createSession(response.user);
     }
     
-    return { success: true } as RegisterState;
+    return response;
   } catch (e) {
     const error = e as AxiosError;
-    console.log("action error", error);
-    return { error: "Registration failed. Please try again." } as RegisterState;
+    console.log("error while register", error);
   }
 }
 
@@ -70,18 +68,10 @@ export async function loginAction(
     if (response.success && response.user) {
       await createSession(response.user);
     }
-    
-    return { success: true } as LoginState;
+
+    return response;
   } catch (e) {
     const error = e as AxiosError;
-    console.log("action error", error);
-    return { error: "Login failed. Please check your credentials." } as LoginState;
+    console.log("error while login", error);
   }
-}
-
-export async function logoutAction() {
-  await deleteSession();
-  // Profil veya layout cache'i kullanıcıya özelse onu da temizlemek isteyebilirsin:
-  // revalidatePath("/", "layout");
-  redirect("/login", RedirectType.replace);
 }
