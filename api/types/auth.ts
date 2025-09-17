@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { RegisterFormSchema, LoginFormSchema } from "../definitions/auth";
-import type { JWTPayload } from "jose";
 
 // Register types derived from Zod schema
 export type RegisterParams = z.infer<typeof RegisterFormSchema>;
@@ -17,7 +16,7 @@ export type LoginResponse = {
 };
 
 export type User = {
-  readonly userId: string;
+  readonly id: string;
   readonly firstName: string;
   readonly lastName: string;
   readonly email: string;
@@ -27,5 +26,3 @@ export type User = {
   readonly turkish_identity_number: string;
   readonly image: string | null;
 };
-
-export type Session = User & JWTPayload;

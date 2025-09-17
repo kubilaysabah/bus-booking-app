@@ -1,13 +1,17 @@
 import "server-only";
-import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { SignJWT, jwtVerify } from "jose";
-import type { User, Session } from "@/api/types/auth";
+import { SignJWT, jwtVerify, JWTPayload } from "jose";
+import type { User } from "@/api/types/auth";
+
+// Create a session payload type that extends JWTPayload with User properties
+export type SessionPayload = JWTPayload & User & {
+  expiresAt: Date;
+};
 
 const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
 
-export async function encrypt(payload: Session) {
+export async function encrypt(payload: JWTPayload) {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
@@ -15,7 +19,7 @@ export async function encrypt(payload: Session) {
     .sign(encodedKey);
 }
 
-export async function decrypt(session: string | undefined) {
+export async function decrypt(session: string | undefined): Promise<SessionPayload | null> {
   if (!session) {
     return null;
   }
@@ -24,10 +28,11 @@ export async function decrypt(session: string | undefined) {
     const { payload } = await jwtVerify(session, encodedKey, {
       algorithms: ["HS256"],
     });
-    console.log("Session decrypted successfully, userId:", payload.userId);
-    return payload;
+    
+    return payload as SessionPayload;
   } catch (error) {
     console.log("Failed to verify session:", error);
+    return null;
   }
 }
 
@@ -70,7 +75,7 @@ export async function deleteSession() {
   cookieStore.delete("session");
 }
 
-export async function getSession() {
+export async function getSession(): Promise<SessionPayload | null> {
   const cookie = (await cookies()).get("session")?.value;
   const session = await decrypt(cookie);
 

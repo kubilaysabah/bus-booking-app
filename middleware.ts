@@ -24,7 +24,7 @@ export default async function middleware(req: NextRequest) {
   // 5. Redirect to /profile if the user is authenticated and on auth pages
   if (
     isPublicRoute &&
-    session?.userId &&
+    session?.id &&
     (path === '/login' || path === '/signup')
   ) {
     return NextResponse.redirect(new URL('/profile', req.nextUrl))

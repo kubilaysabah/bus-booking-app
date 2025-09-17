@@ -23,7 +23,7 @@ export function RegisterForm({
 
   useEffect(() => {
     if (state?.success) {
-      router.push('/profile');
+      router.push('/trip');
     }
   }, [state, router]);
 

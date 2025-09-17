@@ -18,7 +18,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
 
   useEffect(() => {
     if (state?.success) {
-      router.push("/profile");
+      router.push("/trip");
     }
   }, [state, router]);
 
