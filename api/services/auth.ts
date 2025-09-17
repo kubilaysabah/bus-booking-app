@@ -1,7 +1,14 @@
 import http from "./http";
-import type { LoginParams, RegisterParams, LoginResponse, RegisterResponse } from '@/api/types/auth';
+import type {
+  LoginParams,
+  RegisterParams,
+  LoginResponse,
+  RegisterResponse,
+} from "@/api/types/auth";
 
-export async function Register(params: RegisterParams): Promise<RegisterResponse> {
+export async function Register(
+  params: RegisterParams
+): Promise<RegisterResponse> {
   const response = await http.post<RegisterResponse>("register", params);
   return response.data;
 }

@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { FormError } from '@/components/form-error'
 import { DatePicker } from '@/components/ui/datepicker'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 type RegisterFormProps = React.ComponentProps<"form">
 
@@ -95,6 +96,20 @@ export function RegisterForm({
           <FormError errors={state?.birthDate?.errors} />
         </div>
         <div className="grid gap-3">
+          <Label htmlFor="gender">Gender</Label>
+          <Select name="gender" defaultValue="other" disabled={pending} required>
+            <SelectTrigger id="gender" className={cn("w-full", state?.gender?.errors?.length && "border-red-500")}>
+              <SelectValue placeholder="Select your gender" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Male">Male</SelectItem>
+              <SelectItem value="Female">Female</SelectItem>
+              <SelectItem value="Other">Other</SelectItem>
+            </SelectContent>
+          </Select>
+          <FormError errors={state?.gender?.errors} />
+        </div>
+        <div className="grid gap-3">
           <Label htmlFor="email">Email</Label>
           <Input
             disabled={pending}
@@ -124,7 +139,7 @@ export function RegisterForm({
           <small className="text-muted-foreground">At least 8 characters long</small>
           <FormError errors={state?.password?.errors} />
         </div>
-        <Button disabled={pending} type="submit" className="w-full">
+        <Button variant={"default"} size={"default"} disabled={pending} type="submit" className="w-full">
           {"Register"}
         </Button>
       </div>

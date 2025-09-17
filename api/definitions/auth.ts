@@ -18,7 +18,7 @@ export const RegisterFormSchema = z.strictObject({
     .regex(/^\d{11}$/, { error: "Turkish identity number must be a valid 11-digit number." })
     .trim(),
   birthDate: z.string().trim(),
-  gender: z.enum(["male", "female", "other"]),
+  gender: z.enum(["Male", "Female", "Other"]),
   phone: z.string()
     .min(10, { error: "Phone number must be at least 10 characters." })
     .max(15, { error: "Phone number must be at most 15 characters." })

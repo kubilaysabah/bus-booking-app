@@ -4,7 +4,7 @@ const baseURL = process.env.NEXT_PUBLIC_BASE_API_URL || 'http://localhost:3000/a
 
 const http = axios.create({
   baseURL,
-  timeout: 1000,
+  timeout: 10000, // 10 seconds
 });
 
 export default http;

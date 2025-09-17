@@ -1,3 +1,5 @@
+"use server";
+
 import * as z from "zod";
 import {
   LoginFormSchema,
@@ -6,7 +8,7 @@ import {
   RegisterFormType,
 } from "@/api/definitions/auth";
 import { Register, Login } from "@/api/services/auth";
-import { AxiosError } from "axios";
+import type { AxiosError } from "axios";
 
 type RegisterState = FormState<RegisterFormType>;
 type LoginState = FormState<LoginFormType>;
@@ -15,7 +17,16 @@ export async function registerAction(
   initialState: RegisterState,
   formData: FormData
 ): Promise<RegisterState> {
-  const data = Object.fromEntries(formData.entries());
+  const data = {
+    turkish_identity_number: formData.get("turkish_identity_number"),
+    firstName: formData.get("firstName"),
+    lastName: formData.get("lastName"),
+    gender: formData.get("gender"),
+    birthDate: formData.get("birthdate"),
+    email: formData.get("email"),
+    phone: formData.get("phone"),
+    password: formData.get("password"),
+  };
 
   // Validate form fields
   const result = RegisterFormSchema.safeParse(data);
@@ -25,13 +36,14 @@ export async function registerAction(
     return z.treeifyError(result.error).properties;
   }
 
-  const parsedData = RegisterFormSchema.parse(data);
+  const parsedSafeData = RegisterFormSchema.parse(data);
 
   try {
-    const response = await Register(parsedData);
+    const response = await Register(parsedSafeData);
     console.log("register response", response);
   } catch (e) {
     const error = e as AxiosError;
+    console.log("action error", error);
   }
 }
 
@@ -39,7 +51,10 @@ export async function loginAction(
   initialState: LoginState,
   formData: FormData
 ): Promise<LoginState> {
-  const data = Object.fromEntries(formData.entries());
+  const data = {
+    email: formData.get('email'),
+    password: formData.get('password')
+  }
 
   // Validate form fields
   const result = LoginFormSchema.safeParse(data);
@@ -56,5 +71,6 @@ export async function loginAction(
     console.log("login response", response);
   } catch (e) {
     const error = e as AxiosError;
+    console.log("action error", error);
   }
 }
