@@ -26,22 +26,22 @@ export async function POST(request: Request) {
     });
 
     if (!user) {
-      return NextResponse.json({ success: false }, { status: 401 });
+      return NextResponse.json({ success: false, data: null, message: 'User not found' }, { status: 401 });
     }
 
     const passwordMatch = await bcrypt.compare(data.password, user.password);
 
     if (!passwordMatch) {
-      return NextResponse.json({ success: false }, { status: 401 });
+      return NextResponse.json({ success: false, data: null, message: 'Invalid password' }, { status: 401 });
     }
 
     const { password, ...userWithoutPassword } = user;
 
     return NextResponse.json({
       success: true,
-      user: { ...userWithoutPassword },
+      data: { ...userWithoutPassword },
     });
   } catch (e) {
-    return NextResponse.json({ success: false }, { status: 500 });
+    return NextResponse.json({ success: false, data: null, message: 'Internal Server Error' }, { status: 500 });
   }
 }

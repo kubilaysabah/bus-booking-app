@@ -15,10 +15,10 @@ export async function POST(request: Request) {
     });
 
     if (findUser) {
-      return NextResponse.json({ success: false }, { status: 409 });
+      return NextResponse.json({ success: false, data: null, message: 'User already exists' }, { status: 409 });
     }
   } catch (error) {
-    return NextResponse.json({ success: false }, { status: 500 });
+    return NextResponse.json({ success: false, data: null, message: 'Internal Server Error' }, { status: 500 });
   }
 
   const hashedPassword = await bcrypt.hash(body.password, 10);
@@ -50,9 +50,9 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      user,
+      data: user,
     });
   } catch (e) {
-    return NextResponse.json({ success: false, data: null }, { status: 500 });
+    return NextResponse.json({ success: false, data: null, message: 'Internal Server Error' }, { status: 500 });
   }
 }
