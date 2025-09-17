@@ -40,7 +40,6 @@ export async function registerAction(
     
     if (response.success && response.user) {
       await createSession(response.user);
-      redirect("/profile", RedirectType.replace);
     }
     
     return { success: true } as RegisterState;
@@ -70,7 +69,6 @@ export async function loginAction(
     
     if (response.success && response.user) {
       await createSession(response.user);
-      redirect("/profile", RedirectType.replace);
     }
     
     return { success: true } as LoginState;

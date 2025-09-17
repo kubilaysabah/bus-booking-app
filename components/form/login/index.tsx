@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link'
-import { useActionState } from 'react'
+import { useActionState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { loginAction } from '@/api/actions/auth'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -16,6 +17,13 @@ export function LoginForm({
   ...props
 }: LoginFormProps) {
   const [state, action, pending] = useActionState(loginAction, null);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (state?.success) {
+      router.push('/profile');
+    }
+  }, [state, router]);
 
   return (
     <form action={action} className={cn("flex flex-col gap-6", className)} {...props}>
