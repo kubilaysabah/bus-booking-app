@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useActionState } from 'react'
-import { login } from '@/actions/auth'
+import { loginAction } from '@/api/actions/auth'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -13,7 +13,7 @@ export function LoginForm({
   className,
   ...props
 }: LoginFormProps) {
-  const [state, action, pending] = useActionState(login, null);
+  const [state, action, pending] = useActionState(loginAction, null);
 
   return (
     <form action={action} className={cn("flex flex-col gap-6", className)} {...props}>

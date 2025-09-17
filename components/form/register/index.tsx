@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useActionState } from 'react'
-import { register } from '@/actions/auth'
+import { registerAction } from '@/api/actions/auth'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -16,8 +16,7 @@ export function RegisterForm({
   className,
   ...props
 }: RegisterFormProps) {
-  const [state, action, pending] = useActionState(register, null);
-  console.log(state);
+  const [state, action, pending] = useActionState(registerAction, null);
 
   return (
     <form action={action} className={cn("flex flex-col gap-6", className)} {...props}>
