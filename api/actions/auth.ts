@@ -9,7 +9,7 @@ import {
   type RegisterFormType,
 } from "@/api/definitions/auth";
 import { Register, Login } from "@/api/services/auth";
-import { createSession } from "@/lib/session";
+import { createSession, deleteSession } from "@/lib/session";
 
 type RegisterState = FormState<RegisterFormType>;
 type LoginState = FormState<LoginFormType>;
@@ -36,11 +36,11 @@ export async function registerAction(
 
   try {
     const response = await Register(parsed);
-    
+
     if (response.success && response.data) {
       await createSession(response.data);
     }
-    
+
     return response;
   } catch (e) {
     const error = e as AxiosError;
@@ -64,7 +64,7 @@ export async function loginAction(
 
   try {
     const response = await Login(parsed);
-    
+
     if (response.success && response.data) {
       await createSession(response.data);
     }
@@ -73,5 +73,14 @@ export async function loginAction(
   } catch (e) {
     const error = e as AxiosError;
     console.log("error while login", error);
+  }
+}
+
+export async function logoutAction(): Promise<{ result: boolean }> {
+  try {
+    await deleteSession();
+    return { result: true };
+  } catch (error) {
+    return { result: false };
   }
 }
