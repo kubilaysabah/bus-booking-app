@@ -30,6 +30,43 @@ model Address {
   @@map("addresses")
 }
 
+model City {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // İlişkiler
+  departureTrips Trip[] @relation("DepartureCity")
+  arrivalTrips   Trip[] @relation("ArrivalCity")
+
+  @@map("cities")
+}
+
+model Trip {
+  id              String   @id @default(cuid())
+  bus             Bus      @relation(fields: [busId], references: [id])
+  busId           String
+  
+  // Şehir ilişkileri
+  departureCity   City     @relation("DepartureCity", fields: [departureCityId], references: [id])
+  departureCityId String
+  arrivalCity     City     @relation("ArrivalCity", fields: [arrivalCityId], references: [id])
+  arrivalCityId   String
+  
+  // Seyahat detayları
+  departureTime   DateTime
+  arrivalTime     DateTime
+  price           Float
+  availableSeats  Int
+  isActive        Boolean  @default(true)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("trips")
+}
+
 model User {
   id                      String      @id @default(cuid())
   turkish_identity_number String
@@ -47,7 +84,7 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+
   @@map("users")
 }
 
@@ -75,6 +112,7 @@ model Bus {
   model       String
   capacity    Int
   type        BusType
+  trips       Trip[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
