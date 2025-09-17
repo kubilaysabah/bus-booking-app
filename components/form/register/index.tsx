@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { FormError } from '@/components/ui/form-error'
+import { DatePicker } from '@/components/ui/datepicker'
 
 type RegisterFormProps = React.ComponentProps<"form">
 
@@ -62,6 +63,19 @@ export function RegisterForm({
             isError={Boolean(state?.phone?.errors?.length)}
           />
           <FormError errors={state?.phone?.errors} />
+        </div>
+        <div className="grid gap-3">
+          <DatePicker
+            id="birthDate"
+            name="birthDate"
+            label="Birth Date"
+            placeholder="Select your birth date"
+            disabled={pending}
+            required
+            maxDate={new Date()} // Bugünden sonraki tarihleri devre dışı bırak
+            isError={Boolean(state?.birthDate?.errors?.length)}
+          />
+          <FormError errors={state?.birthDate?.errors} />
         </div>
         <div className="grid gap-3">
           <Label htmlFor="email">Email</Label>
