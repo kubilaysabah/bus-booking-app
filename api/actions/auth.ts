@@ -1,22 +1,22 @@
 "use server";
 
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 import type { AxiosError } from "axios";
 import { z } from "zod";
 import {
   LoginFormSchema,
-  LoginFormType,
   RegisterFormSchema,
-  RegisterFormType,
+  type LoginFormType,
+  type RegisterFormType,
 } from "@/api/definitions/auth";
 import { Register, Login } from "@/api/services/auth";
-import { deleteSession } from "@/lib/session";
+import { deleteSession, createSession } from "@/lib/session";
 
 type RegisterState = FormState<RegisterFormType>;
 type LoginState = FormState<LoginFormType>;
 
 export async function registerAction(
-  initialState: RegisterState,
+  _initialState: RegisterState,
   formData: FormData
 ): Promise<RegisterState> {
   const data = {
@@ -30,29 +30,29 @@ export async function registerAction(
     password: formData.get("password"),
   } as const;
 
-  // Validate form fields
   const result = RegisterFormSchema.safeParse(data);
+  if (!result.success) return z.treeifyError(result.error).properties;
 
-  // If any form fields are invalid, return early
-  if (!result.success) {
-    return z.treeifyError(result.error).properties;
-  }
-
-  const parsedSafeData = RegisterFormSchema.parse(data);
+  const parsed = RegisterFormSchema.parse(data);
 
   try {
-    const response = await Register(parsedSafeData);
-    if (response.success) {
-      return redirect("/profile");
+    const response = await Register(parsed);
+    
+    if (response.success && response.user) {
+      await createSession(response.user);
+      redirect("/profile", RedirectType.replace);
     }
+    
+    return { success: true } as RegisterState;
   } catch (e) {
     const error = e as AxiosError;
     console.log("action error", error);
+    return { error: "Registration failed. Please try again." } as RegisterState;
   }
 }
 
 export async function loginAction(
-  initialState: LoginState,
+  _initialState: LoginState,
   formData: FormData
 ): Promise<LoginState> {
   const data = {
@@ -60,29 +60,30 @@ export async function loginAction(
     password: formData.get("password"),
   };
 
-  // Validate form fields
   const result = LoginFormSchema.safeParse(data);
+  if (!result.success) return z.treeifyError(result.error).properties;
 
-  // If any form fields are invalid, return early
-  if (!result.success) {
-    return z.treeifyError(result.error).properties;
-  }
-
-  const parsedData = LoginFormSchema.parse(data);
+  const parsed = LoginFormSchema.parse(data);
 
   try {
-    const response = await Login(parsedData);
-    if (response.success) {
-      return redirect("/profile");
+    const response = await Login(parsed);
+    
+    if (response.success && response.user) {
+      await createSession(response.user);
+      redirect("/profile", RedirectType.replace);
     }
+    
+    return { success: true } as LoginState;
   } catch (e) {
     const error = e as AxiosError;
     console.log("action error", error);
+    return { error: "Login failed. Please check your credentials." } as LoginState;
   }
 }
 
-
 export async function logoutAction() {
-  await deleteSession()
-  redirect('/login')
+  await deleteSession();
+  // Profil veya layout cache'i kullanıcıya özelse onu da temizlemek isteyebilirsin:
+  // revalidatePath("/", "layout");
+  redirect("/login", RedirectType.replace);
 }

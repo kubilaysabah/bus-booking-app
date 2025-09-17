@@ -47,8 +47,7 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@unique([phone, turkish_identity_number])
+  
   @@map("users")
 }
 

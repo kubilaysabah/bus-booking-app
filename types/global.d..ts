@@ -15,6 +15,8 @@ declare global {
         [K in keyof T]?: {
           errors: string[] | undefined;
         };
+        success?: boolean;
+        error?: string;
       }
     | undefined
     | null;

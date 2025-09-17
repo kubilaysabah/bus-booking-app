@@ -6,15 +6,18 @@ import type { JWTPayload } from "jose";
 export type RegisterParams = z.infer<typeof RegisterFormSchema>;
 export type RegisterResponse = {
   success: boolean;
+  user?: User;
 };
 
 // Login types derived from Zod schema
 export type LoginParams = z.infer<typeof LoginFormSchema>;
 export type LoginResponse = {
   success: boolean;
+  user?: User;
 };
 
 export type User = {
+  readonly userId: string;
   readonly firstName: string;
   readonly lastName: string;
   readonly email: string;
