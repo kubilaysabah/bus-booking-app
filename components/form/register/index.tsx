@@ -29,39 +29,54 @@ export function RegisterForm({
       <div className="grid gap-6">
         <div className="grid gap-3">
           <Label htmlFor="firstname">Firstname</Label>
-          <Input 
-            disabled={pending} 
+          <Input
+            disabled={pending}
             id="firstname"
-            name="firstName" 
-            type="text" 
-            placeholder="John" 
-            required 
+            name="firstName"
+            type="text"
+            placeholder="John"
+            required
             isError={Boolean(state?.firstName?.errors?.length)}
           />
           <FormError errors={state?.firstName?.errors} />
         </div>
         <div className="grid gap-3">
           <Label htmlFor="lastname">Lastname</Label>
-          <Input 
-            disabled={pending} 
-            id="lastname" 
+          <Input
+            disabled={pending}
+            id="lastname"
             name="lastName"
-            type="text" 
-            placeholder="Doe" 
-            required 
+            type="text"
+            placeholder="Doe"
+            required
             isError={Boolean(state?.lastName?.errors?.length)}
           />
           <FormError errors={state?.lastName?.errors} />
         </div>
         <div className="grid gap-3">
+          <Label htmlFor="turkish_identity_number">Turkish Identity Number</Label>
+          <Input
+            minLength={11}
+            maxLength={11}
+            disabled={pending}
+            id="turkish_identity_number"
+            name="turkish_identity_number"
+            type="text"
+            placeholder="12345678901"
+            required
+            isError={Boolean(state?.turkish_identity_number?.errors?.length)}
+          />
+          <FormError errors={state?.turkish_identity_number?.errors} />
+        </div>
+        <div className="grid gap-3">
           <Label htmlFor="phone">Phone</Label>
-          <Input 
-            disabled={pending} 
+          <Input
+            disabled={pending}
             id="phone"
             name="phone"
-            type="tel" 
-            placeholder="+905554443322" 
-            required 
+            type="tel"
+            placeholder="+905554443322"
+            required
             isError={Boolean(state?.phone?.errors?.length)}
           />
           <FormError errors={state?.phone?.errors} />
@@ -81,29 +96,29 @@ export function RegisterForm({
         </div>
         <div className="grid gap-3">
           <Label htmlFor="email">Email</Label>
-          <Input 
-            disabled={pending} 
+          <Input
+            disabled={pending}
             id="email"
             name="email"
-            type="email" 
-            placeholder="johndoe@mail.com" 
-            required 
+            type="email"
+            placeholder="johndoe@mail.com"
+            required
             isError={Boolean(state?.email?.errors?.length)}
           />
           <FormError errors={state?.email?.errors} />
         </div>
         <div className="grid gap-3">
           <Label htmlFor="password">Password</Label>
-          <Input 
-            disabled={pending} 
-            id="password" 
+          <Input
+            disabled={pending}
+            id="password"
             type="password"
-            name="password" 
-            placeholder="Your password" 
+            name="password"
+            placeholder="Your password"
             autoComplete="new-password"
             minLength={8}
             maxLength={128}
-            required 
+            required
             isError={Boolean(state?.password?.errors?.length)}
           />
           <small className="text-muted-foreground">At least 8 characters long</small>

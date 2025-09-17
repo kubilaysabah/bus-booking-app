@@ -19,12 +19,13 @@ export async function registerAction(
 
   // Validate form fields
   const result = RegisterFormSchema.safeParse(data);
-  const parsedData = RegisterFormSchema.parse(data);
 
   // If any form fields are invalid, return early
   if (!result.success) {
     return z.treeifyError(result.error).properties;
   }
+
+  const parsedData = RegisterFormSchema.parse(data);
 
   try {
     const response = await Register(parsedData);
@@ -42,12 +43,13 @@ export async function loginAction(
 
   // Validate form fields
   const result = LoginFormSchema.safeParse(data);
-  const parsedData = LoginFormSchema.parse(data);
 
   // If any form fields are invalid, return early
   if (!result.success) {
     return z.treeifyError(result.error).properties;
   }
+
+  const parsedData = LoginFormSchema.parse(data);
 
   try {
     const response = await Login(parsedData);
