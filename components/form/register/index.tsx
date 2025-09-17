@@ -105,7 +105,7 @@ export function RegisterForm({
         </div>
         <div className="grid gap-3">
           <Label htmlFor="gender">Gender</Label>
-          <Select name="gender" defaultValue="other" disabled={pending} required>
+          <Select name="gender" defaultValue="Male" disabled={pending} required>
             <SelectTrigger id="gender" className={cn("w-full", state?.gender?.errors?.length && "border-red-500")}>
               <SelectValue placeholder="Select your gender" />
             </SelectTrigger>
