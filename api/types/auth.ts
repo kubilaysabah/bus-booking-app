@@ -5,14 +5,16 @@ import { RegisterFormSchema, LoginFormSchema } from "../definitions/auth";
 export type RegisterParams = z.infer<typeof RegisterFormSchema>;
 export type RegisterResponse = {
   success: boolean;
-  user?: User;
+  data?: User;
+  message?: string;
 };
 
 // Login types derived from Zod schema
 export type LoginParams = z.infer<typeof LoginFormSchema>;
 export type LoginResponse = {
   success: boolean;
-  user?: User;
+  data?: User;
+  message?: string;
 };
 
 export type User = {

@@ -37,8 +37,8 @@ export async function registerAction(
   try {
     const response = await Register(parsed);
     
-    if (response.success && response.user) {
-      await createSession(response.user);
+    if (response.success && response.data) {
+      await createSession(response.data);
     }
     
     return response;
@@ -65,8 +65,8 @@ export async function loginAction(
   try {
     const response = await Login(parsed);
     
-    if (response.success && response.user) {
-      await createSession(response.user);
+    if (response.success && response.data) {
+      await createSession(response.data);
     }
 
     return response;
