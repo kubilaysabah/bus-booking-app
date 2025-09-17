@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@/lib/generated/client";
 import bcrypt from "bcryptjs";
-import { encrypt } from "@/lib/session";
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -36,8 +35,8 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ 
-      success: true, 
-      user: { ...user, userId: user.id }
+      success: true,
+      user,
     });
   } catch (e) {
     return NextResponse.json({ success: false, data: null }, { status: 500 });

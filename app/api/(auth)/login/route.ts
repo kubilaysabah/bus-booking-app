@@ -22,7 +22,7 @@ export async function POST(request: Request) {
         birthDate: true,
         turkish_identity_number: true,
         image: true,
-      }
+      },
     });
 
     if (!user) {
@@ -30,16 +30,16 @@ export async function POST(request: Request) {
     }
 
     const passwordMatch = await bcrypt.compare(data.password, user.password);
-    
+
     if (!passwordMatch) {
       return NextResponse.json({ success: false }, { status: 401 });
     }
 
     const { password, ...userWithoutPassword } = user;
-    
-    return NextResponse.json({ 
-      success: true, 
-      user: { ...userWithoutPassword, userId: user.id }
+
+    return NextResponse.json({
+      success: true,
+      user: { ...userWithoutPassword },
     });
   } catch (e) {
     return NextResponse.json({ success: false }, { status: 500 });
