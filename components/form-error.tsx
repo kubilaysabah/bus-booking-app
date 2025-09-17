@@ -6,7 +6,7 @@ export function FormError({ errors }: FormErrorProps) {
   if (!errors?.length) return null;
   
   return (
-    <ul className="space-y-2">
+    <ul>
       {errors.map((error, index) => (
         <li key={index}>
           <small className="text-xs text-red-600">

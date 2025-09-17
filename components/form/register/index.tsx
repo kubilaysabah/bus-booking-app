@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { FormError } from '@/components/ui/form-error'
+import { FormError } from '@/components/form-error'
 import { DatePicker } from '@/components/ui/datepicker'
 
 type RegisterFormProps = React.ComponentProps<"form">
@@ -32,7 +32,8 @@ export function RegisterForm({
           <Label htmlFor="firstname">Firstname</Label>
           <Input 
             disabled={pending} 
-            id="firstname" 
+            id="firstname"
+            name="firstName" 
             type="text" 
             placeholder="John" 
             required 
@@ -45,6 +46,7 @@ export function RegisterForm({
           <Input 
             disabled={pending} 
             id="lastname" 
+            name="lastName"
             type="text" 
             placeholder="Doe" 
             required 
@@ -56,7 +58,8 @@ export function RegisterForm({
           <Label htmlFor="phone">Phone</Label>
           <Input 
             disabled={pending} 
-            id="phone" 
+            id="phone"
+            name="phone"
             type="tel" 
             placeholder="+905554443322" 
             required 
@@ -81,7 +84,8 @@ export function RegisterForm({
           <Label htmlFor="email">Email</Label>
           <Input 
             disabled={pending} 
-            id="email" 
+            id="email"
+            name="email"
             type="email" 
             placeholder="johndoe@mail.com" 
             required 
@@ -94,7 +98,12 @@ export function RegisterForm({
           <Input 
             disabled={pending} 
             id="password" 
-            type="password" 
+            type="password"
+            name="password" 
+            placeholder="Your password" 
+            autoComplete="new-password"
+            minLength={8}
+            maxLength={128}
             required 
             isError={Boolean(state?.password?.errors?.length)}
           />
