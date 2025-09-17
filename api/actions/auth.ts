@@ -1,7 +1,8 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import * as z from "zod";
+import type { AxiosError } from "axios";
+import { z } from "zod";
 import {
   LoginFormSchema,
   LoginFormType,
@@ -9,7 +10,7 @@ import {
   RegisterFormType,
 } from "@/api/definitions/auth";
 import { Register, Login } from "@/api/services/auth";
-import type { AxiosError } from "axios";
+import { deleteSession } from "@/lib/session";
 
 type RegisterState = FormState<RegisterFormType>;
 type LoginState = FormState<LoginFormType>;
@@ -78,4 +79,10 @@ export async function loginAction(
     const error = e as AxiosError;
     console.log("action error", error);
   }
+}
+
+
+export async function logoutAction() {
+  await deleteSession()
+  redirect('/login')
 }
