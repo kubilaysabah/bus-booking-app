@@ -1,1 +1,5 @@
-export default function SearchPage() {}
+export default function SearchPage() {
+    return (
+        <main></main>
+    )
+}
