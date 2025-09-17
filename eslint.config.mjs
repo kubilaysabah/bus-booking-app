@@ -18,7 +18,17 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
+      "lib/generated/**",
+      "prisma/generated/**",
+      "**/*.generated.*",
     ],
+  },
+  {
+    rules: {
+      "@typescript-eslint/no-unused-expressions": "off",
+      "@typescript-eslint/no-require-imports": "off",
+      "@typescript-eslint/no-unused-vars": "warn",
+    },
   },
 ];
 

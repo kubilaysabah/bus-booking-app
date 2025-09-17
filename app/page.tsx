@@ -75,7 +75,7 @@ export default function Home() {
             🚌 Otobüs Bileti Rezervasyon
           </h1>
           <p className="text-gray-600">
-            Türkiye'nin her yerine konforlu ve güvenli seyahat
+            Türkiye&apos;nin her yerine konforlu ve güvenli seyahat
           </p>
         </div>
 

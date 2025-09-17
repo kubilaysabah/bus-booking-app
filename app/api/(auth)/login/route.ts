@@ -35,13 +35,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false }, { status: 401 });
     }
 
-    const { password, ...userWithoutPassword } = user;
+    const { password: _, ...userWithoutPassword } = user;
     
     return NextResponse.json({ 
       success: true, 
       user: { ...userWithoutPassword, userId: user.id }
     });
-  } catch (e) {
+  } catch (_e) {
     return NextResponse.json({ success: false }, { status: 500 });
   }
 }

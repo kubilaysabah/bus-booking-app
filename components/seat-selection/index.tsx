@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, User, X } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 import { Trip } from "@/components/trip-list";
 
 export interface Seat {
