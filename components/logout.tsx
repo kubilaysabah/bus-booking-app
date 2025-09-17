@@ -16,7 +16,7 @@ export default function Logout() {
     }, [state, router]);
 
     return (
-        <form action={action} method="post">
+        <form action={action}>
             <Button disabled={pending} type="submit">Logout</Button>
         </form>
     )
