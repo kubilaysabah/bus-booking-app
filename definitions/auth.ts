@@ -34,4 +34,10 @@ export const RegisterFormSchema = z.strictObject({
     })
 });
 
+export const LoginFormSchema = z.strictObject({
+  email: z.email({ error: "Please enter a valid email." }),
+  password: z.string().min(1, { error: "Password is required." })
+});
+
 export type RegisterFormType = z.infer<typeof RegisterFormSchema>;
+export type LoginFormType = z.infer<typeof LoginFormSchema>;
