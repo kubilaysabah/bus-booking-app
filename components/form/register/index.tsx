@@ -11,6 +11,8 @@ import { Label } from '@/components/ui/label'
 import { FormError } from '@/components/form-error'
 import { DatePicker } from '@/components/ui/datepicker'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import PhoneInput from '@/components/phone-input'
+import TurkishIdentityNumberInput from '@/components/turkish-identity-number-input'
 
 type RegisterFormProps = React.ComponentProps<"form">
 
@@ -64,13 +66,10 @@ export function RegisterForm({
         </div>
         <div className="grid gap-3">
           <Label htmlFor="turkish_identity_number">Turkish Identity Number</Label>
-          <Input
-            minLength={11}
-            maxLength={11}
+          <TurkishIdentityNumberInput
             disabled={pending}
             id="turkish_identity_number"
             name="turkish_identity_number"
-            type="text"
             placeholder="12345678901"
             required
             isError={Boolean(state?.turkish_identity_number?.errors?.length)}
@@ -79,12 +78,11 @@ export function RegisterForm({
         </div>
         <div className="grid gap-3">
           <Label htmlFor="phone">Phone</Label>
-          <Input
+          <PhoneInput
             disabled={pending}
             id="phone"
             name="phone"
-            type="tel"
-            placeholder="+905554443322"
+            placeholder="5554443322"
             required
             isError={Boolean(state?.phone?.errors?.length)}
           />

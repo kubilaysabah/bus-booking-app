@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { LogInIcon, UserPlus2Icon } from 'lucide-react'
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -21,11 +22,11 @@ export default function UserMenu({ session }: UserMenuProps) {
   if (!session) {
     return (
       <nav className="flex flex-wrap items-center justify-center space-x-2">
-        <Button className="w-full sm:w-auto" asChild>
-          <Link href="/login">Login</Link>
+        <Button variant={"outline"} size={"sm"} asChild>
+          <Link href="/login"><LogInIcon />Login</Link>
         </Button>
-        <Button className="w-full sm:w-auto" asChild>
-          <Link href="/register">Sign Up</Link>
+        <Button variant={"outline"} size={"sm"} asChild>
+          <Link href="/register"><UserPlus2Icon />Register</Link>
         </Button>
       </nav>
     );

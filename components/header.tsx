@@ -6,8 +6,12 @@ export default async function Header() {
 
   return (
     <header>
-      <div className="container">
-        <UserMenu session={session} />
+      <div className="container mx-auto py-2">
+        <div className="flex flex-wrap items-center justify-between">
+          <div className="w-full lg:w-auto">
+            <UserMenu session={session} />
+          </div>
+        </div>
       </div>
     </header>
   );

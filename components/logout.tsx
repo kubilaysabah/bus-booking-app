@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useActionState } from "react";
+import { LogOutIcon } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { logoutAction } from "@/api/actions/auth";
 
@@ -17,7 +18,7 @@ export default function Logout() {
 
     return (
         <form action={action}>
-            <Button disabled={pending} type="submit">Logout</Button>
+            <Button disabled={pending} type="submit"><LogOutIcon />Logout</Button>
         </form>
     )
 }
