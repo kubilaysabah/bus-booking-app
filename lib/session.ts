@@ -1,7 +1,6 @@
 import "server-only";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { cache } from "react";
 import { SignJWT, jwtVerify } from "jose";
 import type { User, Session } from "@/api/types/auth";
 
@@ -16,7 +15,11 @@ export async function encrypt(payload: Session) {
     .sign(encodedKey);
 }
 
-export async function decrypt(session: string | undefined = "") {
+export async function decrypt(session: string | undefined) {
+  if (!session) {
+    return null;
+  }
+
   try {
     const { payload } = await jwtVerify(session, encodedKey, {
       algorithms: ["HS256"],
@@ -33,9 +36,6 @@ export async function createSession(user: User) {
   const session = await encrypt({ ...user, expiresAt });
   const cookieStore = await cookies();
 
-  console.log("Creating session for user:", user.userId);
-  console.log("Session expires at:", expiresAt);
-
   cookieStore.set("session", session, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
@@ -43,8 +43,6 @@ export async function createSession(user: User) {
     sameSite: "lax",
     path: "/",
   });
-  
-  console.log("Session cookie set successfully");
 }
 
 export async function updateSession() {
@@ -78,14 +76,3 @@ export async function getSession() {
 
   return session;
 }
-
-export const verifySession = cache(async () => {
-  const cookie = (await cookies()).get("session")?.value;
-  const session = await decrypt(cookie);
-
-  if (!session?.userId) {
-    redirect("/login");
-  }
-
-  return session;
-});
