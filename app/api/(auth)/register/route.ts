@@ -7,6 +7,20 @@ export async function POST(request: Request) {
 
   const prisma = new PrismaClient();
 
+  try {
+    const findUser = await prisma.user.findUnique({
+      where: {
+        email: body.email,
+      },
+    });
+
+    if (findUser) {
+      return NextResponse.json({ success: false }, { status: 409 });
+    }
+  } catch (error) {
+    return NextResponse.json({ success: false }, { status: 500 });
+  }
+
   const hashedPassword = await bcrypt.hash(body.password, 10);
 
   try {
@@ -34,7 +48,7 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
       user,
     });
