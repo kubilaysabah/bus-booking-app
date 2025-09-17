@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@/lib/generated/client";
 import bcrypt from "bcryptjs";
+import { createSession } from "@/lib/session";
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -32,6 +33,8 @@ export async function POST(request: Request) {
         image: true,
       }
     })
+
+    await createSession(user)
 
     return NextResponse.json({ success: true, data: user, }, { status: 200 });
   } catch (e) {

@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import * as z from "zod";
 import {
   LoginFormSchema,
@@ -40,7 +41,9 @@ export async function registerAction(
 
   try {
     const response = await Register(parsedSafeData);
-    console.log("register response", response);
+    if (response.success) {
+      return redirect("/profile");
+    }
   } catch (e) {
     const error = e as AxiosError;
     console.log("action error", error);
@@ -52,9 +55,9 @@ export async function loginAction(
   formData: FormData
 ): Promise<LoginState> {
   const data = {
-    email: formData.get('email'),
-    password: formData.get('password')
-  }
+    email: formData.get("email"),
+    password: formData.get("password"),
+  };
 
   // Validate form fields
   const result = LoginFormSchema.safeParse(data);
@@ -68,7 +71,9 @@ export async function loginAction(
 
   try {
     const response = await Login(parsedData);
-    console.log("login response", response);
+    if (response.success) {
+      return redirect("/profile");
+    }
   } catch (e) {
     const error = e as AxiosError;
     console.log("action error", error);

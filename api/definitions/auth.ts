@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { JWTPayload } from "jose";
 
 export const RegisterFormSchema = z.strictObject({
   firstName: z
@@ -15,11 +16,14 @@ export const RegisterFormSchema = z.strictObject({
     .string()
     .min(11, { error: "Turkish identity number must be 11 characters." })
     .max(11, { error: "Turkish identity number must be 11 characters." })
-    .regex(/^\d{11}$/, { error: "Turkish identity number must be a valid 11-digit number." })
+    .regex(/^\d{11}$/, {
+      error: "Turkish identity number must be a valid 11-digit number.",
+    })
     .trim(),
   birthDate: z.string().trim(),
   gender: z.enum(["Male", "Female", "Other"]),
-  phone: z.string()
+  phone: z
+    .string()
     .min(10, { error: "Phone number must be at least 10 characters." })
     .max(15, { error: "Phone number must be at most 15 characters." })
     .regex(/^\+?[0-9]{10,15}$/, { error: "Please enter a valid phone number." })
@@ -31,13 +35,14 @@ export const RegisterFormSchema = z.strictObject({
     .regex(/[0-9]/, { error: "Contain at least one number." })
     .regex(/[^a-zA-Z0-9]/, {
       error: "Contain at least one special character.",
-    })
+    }),
 });
 
 export const LoginFormSchema = z.strictObject({
   email: z.email({ error: "Please enter a valid email." }),
-  password: z.string().min(1, { error: "Password is required." })
+  password: z.string().min(1, { error: "Password is required." }),
 });
 
 export type RegisterFormType = z.infer<typeof RegisterFormSchema>;
 export type LoginFormType = z.infer<typeof LoginFormSchema>;
+
