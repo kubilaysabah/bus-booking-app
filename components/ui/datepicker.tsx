@@ -74,14 +74,14 @@ export function DatePicker({
         value={date?.toISOString() || ''} 
       />
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
+        <PopoverTrigger className="w-full" asChild>
           <Button
             variant="outline"
             id={id}
             name={name}
             disabled={disabled}
             className={cn(
-              "justify-between font-normal",
+              "justify-between font-normal w-full",
               isError && "border-red-500",
               buttonClassName
             )}

@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { JWTPayload } from "jose";
 
 export const RegisterFormSchema = z.strictObject({
   firstName: z

@@ -3,7 +3,9 @@ import SearchTripForm from "@/components/form/search-trip";
 export default function Home() {
   return (
     <main>
-      <SearchTripForm />
+      <div className="container mx-auto">
+        <SearchTripForm />
+      </div>
     </main>
   );
 }
